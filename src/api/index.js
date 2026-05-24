@@ -27,3 +27,20 @@ export const sendQuery = async (query) => {
   if (!response.ok) throw new Error('Failed to send query');
   return response.json();
 };
+
+export const changeDatabase = async (config) => {
+  const response = await fetch(`${BASE_URL}/api/change_database`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(config),
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || 'Failed to change database');
+  }
+  
+  return response.json();
+};
